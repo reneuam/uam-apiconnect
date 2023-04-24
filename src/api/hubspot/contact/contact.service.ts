@@ -19,7 +19,7 @@ export class ContactService {
     const { access_token: accessToken } = await this.hubspotService.authorize();
     const hubspotClient = new Client({ accessToken });
 
-    const limit = 100;
+    const limit = parseInt(process.env.HUBSPOT_API_RECORD_LIMIT);
     const after = undefined;
     const properties = ContactProperties;
 
