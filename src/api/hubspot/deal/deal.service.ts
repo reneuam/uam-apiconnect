@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDealDto } from './dto/create-deal.dto';
 import { UpdateDealDto } from './dto/update-deal.dto';
-import { HubspotService } from 'src/api/hubspot/hubspot.service';
-import { Client } from "@hubspot/api-client";
-import { DealProperties } from 'src/common/constants/hubspot-deal-properties';
+import { DealHubspotService } from 'src/common/services/hubspot/deal-hubspot.service';
 
 @Injectable()
 export class DealService {
   constructor(
-    private readonly hubspotService: HubspotService
+    private readonly dealHubspotService: DealHubspotService
   ) {}
 
   create(createDealDto: CreateDealDto) {
@@ -16,37 +14,11 @@ export class DealService {
   }
 
   async findAll(findParams: any) {
-    const { access_token: accessToken } = await this.hubspotService.authorize();
-    const hubspotClient = new Client({ accessToken });
-
-    const limit = parseInt(process.env.HUBSPOT_API_RECORD_LIMIT);
-    const after = findParams.after;
-    const properties = DealProperties;
-
-    const deals = await hubspotClient.crm.deals.basicApi
-    .getPage(limit, after, properties)
-    .then((data) => {
-      return data;
-    })
-    .catch((err) => {
-        console.error(err);
-    });
-
-    return deals;
+    return await this.dealHubspotService.findAll(findParams);
   }
 
   async findOne(id: string) {
-    const { access_token: accessToken } = await this.hubspotService.authorize();
-    const hubspotClient = new Client({ accessToken });
-
-    const properties = DealProperties;
-
-    const deal = await hubspotClient.crm.deals.basicApi.getById(id, properties)
-    .catch((err) => {
-      console.error(err);
-    });
-    
-    return deal;
+    return await this.dealHubspotService.findOne(id);
   }
 
   update(id: string, updateDealDto: UpdateDealDto) {

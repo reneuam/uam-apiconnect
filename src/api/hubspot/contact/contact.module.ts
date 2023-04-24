@@ -2,9 +2,10 @@ import { Module, forwardRef } from '@nestjs/common';
 import { ContactService } from './contact.service';
 import { ContactController } from './contact.controller';
 import { HubspotModule } from '../hubspot.module';
+import { ApiHubspotModule } from 'src/common/services/hubspot/api-hubspot.module';
 
 @Module({
-  imports: [forwardRef(() => HubspotModule)],
+  imports: [ApiHubspotModule, forwardRef(() => HubspotModule)],
   controllers: [ContactController],
   providers: [ContactService]
 })
