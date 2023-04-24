@@ -22,17 +22,11 @@ export class ContactService {
     const limit = 100;
     const after = undefined;
     const properties = ContactProperties;
-    const propertiesWithHistory = undefined;
-    const associations = undefined;
-    const archived = false;
-    const options = '';
 
     const contacts = await hubspotClient.crm.contacts.basicApi
-    .getPage(limit, undefined, properties, propertiesWithHistory, associations, archived)
-    .then((results) => {
-        const { results: contacts } = results;
-        
-        return contacts;
+    .getPage(limit, after, properties)
+    .then((contacts) => {  
+      return contacts;
     })
     .catch((err) => {
         console.error(err);

@@ -19,20 +19,14 @@ export class DealService {
     const { access_token: accessToken } = await this.hubspotService.authorize();
     const hubspotClient = new Client({ accessToken });
 
-    const limit = 2;
+    const limit = 100;
     const after = undefined;
     const properties = DealProperties;
-    const propertiesWithHistory = undefined;
-    const associations = undefined;
-    const archived = false;
-    const options = '';
 
     const deals = await hubspotClient.crm.deals.basicApi
-    .getPage(limit, undefined, properties, propertiesWithHistory, associations, archived)
-    .then((results) => {
-        const { results: deals } = results;
-        
-        return deals;
+    .getPage(limit, undefined, properties)
+    .then((deals) => {
+      return deals;
     })
     .catch((err) => {
         console.error(err);
