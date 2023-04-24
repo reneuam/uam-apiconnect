@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { DealService } from './deal.service';
 import { CreateDealDto } from './dto/create-deal.dto';
 import { UpdateDealDto } from './dto/update-deal.dto';
@@ -13,8 +13,11 @@ export class DealController {
   }
 
   @Get()
-  findAll() {
-    return this.dealService.findAll();
+  findAll(@Query() queryParams) {
+    const after = (queryParams.after) ? queryParams.after : undefined;
+    const findParams = { after };
+
+    return this.dealService.findAll(findParams);
   }
 
   @Get(':id')

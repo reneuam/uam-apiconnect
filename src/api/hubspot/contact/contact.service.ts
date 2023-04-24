@@ -15,18 +15,18 @@ export class ContactService {
     return 'This action adds a new contact';
   }
 
-  async findAll() {
+  async findAll(findParams: any) {
     const { access_token: accessToken } = await this.hubspotService.authorize();
     const hubspotClient = new Client({ accessToken });
 
     const limit = parseInt(process.env.HUBSPOT_API_RECORD_LIMIT);
-    const after = undefined;
+    const after = findParams.after;
     const properties = ContactProperties;
 
     const contacts = await hubspotClient.crm.contacts.basicApi
     .getPage(limit, after, properties)
-    .then((contacts) => {  
-      return contacts;
+    .then((data) => {  
+      return data;
     })
     .catch((err) => {
         console.error(err);
