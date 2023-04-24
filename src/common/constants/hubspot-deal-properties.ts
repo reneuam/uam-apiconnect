@@ -1,4 +1,4 @@
-export const DealFields = [
+export const DealProperties = [
   'agent_acount',
   'amount',
   'amount_in_home_currency',
