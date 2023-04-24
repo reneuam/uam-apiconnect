@@ -13,8 +13,10 @@ export class HubspotService {
       refresh_token: process.env.HUBSPOT_REFRESH_TOKEN
     };
 
+    const url = 'https://api.hubapi.com/oauth/v1/token';
+
     try {
-      const response =  await axios.post('https://api.hubapi.com/oauth/v1/token', refreshTokenFormData, {
+      const response =  await axios.post(url, refreshTokenFormData, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
