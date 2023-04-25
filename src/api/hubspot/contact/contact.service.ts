@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
-import { ContactHubspotService } from 'src/common/services/hubspot/contact-hubspot.service';
+import { ContactHubspotApiService } from 'src/common/services/hubspot/contact-hubspot.service';
 
 @Injectable()
 export class ContactService {
   constructor(
-    private readonly contactHubspotService: ContactHubspotService
+    private readonly contactHubspotApiService: ContactHubspotApiService
   ) {}
 
   create(createContactDto: CreateContactDto) {
@@ -14,11 +14,11 @@ export class ContactService {
   }
 
   async findAll(findParams: any) {
-    return await this.contactHubspotService.findAll(findParams);
+    return await this.contactHubspotApiService.findAll(findParams);
   }
 
   async findOne(id: string) {
-    return await this.contactHubspotService.findOne(id);
+    return await this.contactHubspotApiService.findOne(id);
   }
 
   update(id: string, updateContactDto: UpdateContactDto) {

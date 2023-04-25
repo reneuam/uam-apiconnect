@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Client } from "@hubspot/api-client";
 import { DealProperties } from 'src/common/constants/hubspot-deal-properties';
-import { AuthHubspotService } from './auth-hubspot.service';
+import { AuthHubspotApiService } from './auth-hubspot.service';
 
 @Injectable()
-export class DealHubspotService {
-  constructor(private readonly authService: AuthHubspotService) {}
+export class DealHubspotApiService {
+  constructor(private readonly authService: AuthHubspotApiService) {}
 
   async findAll(findParams: any): Promise<any> {
     const { access_token: accessToken } = await this.authService.authorize();

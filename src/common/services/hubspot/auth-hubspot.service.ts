@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';``
 import axios from 'axios';
 
 @Injectable()
-export class AuthHubspotService {
+export class AuthHubspotApiService {
   async authorize() {
     const refreshTokenFormData = {
       grant_type: 'refresh_token',
