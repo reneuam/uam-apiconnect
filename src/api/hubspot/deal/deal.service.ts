@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateDealDto } from './dto/create-deal.dto';
 import { UpdateDealDto } from './dto/update-deal.dto';
 import { DealHubspotApiService } from 'src/common/services/hubspot/deal-hubspot.service';
+import { Deal } from './entities/deal.entity';
 
 @Injectable()
 export class DealService {
   constructor(
-    private readonly dealHubspotApiService: DealHubspotApiService
+    private readonly dealHubspotApiService: DealHubspotApiService,
+    @InjectRepository(Deal)
+    private readonly dealRepository: Repository<Deal>
   ) {}
 
   create(createDealDto: CreateDealDto) {
