@@ -13,6 +13,27 @@ export class ContactService {
     return 'This action adds a new contact';
   }
 
+  async bulkCreate(contacts: any) {
+    const createdContacts = await Promise.all(
+      contacts.map((contact: any) => console.log())
+    );
+  }
+
+  async migrate() {
+    let findParams = { after: undefined };
+    let allowToContinue = true;
+
+    while (allowToContinue) {
+      const contacts = await this.contactHubspotApiService.findAll(findParams);
+
+      (contacts.paging?.next.after) ?
+        findParams.after = contacts.paging.next.after :
+        allowToContinue = false;
+
+      await this.bulkCreate(contacts.results);
+    }
+  }
+
   async findAll(findParams: any) {
     return await this.contactHubspotApiService.findAll(findParams);
   }
