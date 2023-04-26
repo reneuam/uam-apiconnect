@@ -1,5 +1,5 @@
 export const ContactProperties = [
-  'acount_type',
+  'account_type',
   'address',
   'annualrevenue',
   'assistant_email',
@@ -18,6 +18,7 @@ export const ContactProperties = [
   'company_name',
   'company_size',
   'country',
+  'createdate',
   'customer_service',
   'database_management_archiving',
   'days_to_close',
@@ -71,7 +72,6 @@ export const ContactProperties = [
   'hs_date_exited_subscriber',
   'hs_facebook_ad_clicked',
   'hs_facebook_click_id',
-  'hs_facebookid',
   'hs_facebookid',
   'hs_google_click_id',
   'hs_googleplusid',
