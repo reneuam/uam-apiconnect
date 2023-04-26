@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { ContactHubspotApiService } from 'src/common/services/hubspot/contact-hubspot.service';
+import { Contact } from './entities/contact.entity';
 
 @Injectable()
 export class ContactService {
   constructor(
-    private readonly contactHubspotApiService: ContactHubspotApiService
+    private readonly contactHubspotApiService: ContactHubspotApiService,
+    @InjectRepository(Contact)
+    private readonly balanceRepository: Repository<Contact>
   ) {}
 
   create(createContactDto: CreateContactDto) {
