@@ -11,7 +11,7 @@ export class ContactService {
   constructor(
     private readonly contactHubspotApiService: ContactHubspotApiService,
     @InjectRepository(Contact)
-    private readonly balanceRepository: Repository<Contact>
+    private readonly contactRepository: Repository<Contact>
   ) {}
 
   create(createContactDto: CreateContactDto) {
