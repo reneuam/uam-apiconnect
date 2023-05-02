@@ -13,6 +13,7 @@ import { Deal } from './entities/deal.entity';
     forwardRef(() => HubspotModule)
   ],
   controllers: [DealController],
-  providers: [DealService]
+  providers: [DealService],
+  exports: [DealService]
 })
 export class DealModule {}

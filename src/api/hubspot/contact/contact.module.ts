@@ -13,6 +13,7 @@ import { Contact } from './entities/contact.entity';
     forwardRef(() => HubspotModule)
   ],
   controllers: [ContactController],
-  providers: [ContactService]
+  providers: [ContactService],
+  exports: [ContactService]
 })
 export class ContactModule {}
