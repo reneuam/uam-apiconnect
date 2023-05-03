@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateContactDto } from './dto/create-contact.dto';
-import { UpdateContactDto } from './dto/update-contact.dto';
 import { ContactHubspotApiService } from 'src/common/services/hubspot/contact-hubspot.service';
 import { Contact } from './entities/contact.entity';
+import { parseToDouble, parseToInt } from 'src/common/utils/number-parser';
 
 @Injectable()
 export class ContactService {
@@ -14,13 +13,115 @@ export class ContactService {
     private readonly contactRepository: Repository<Contact>
   ) {}
 
-  create(createContactDto: CreateContactDto) {
-    return 'This action adds a new contact';
+  async create(id: string) {
+    const contact = await this.contactHubspotApiService.findOne(id);
+
+    if (contact) {
+      const annualrevenue = parseToDouble(contact.properties.annualrevenue);
+      const hs_time_between_contact_creation_and_deal_close = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_close);
+      const hs_time_between_contact_creation_and_deal_creation = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_creation);
+      const hs_time_in_customer = parseToInt(contact.properties.hs_time_in_customer);
+      const hs_time_in_evangelist = parseToInt(contact.properties.hs_time_in_evangelist);
+      const hs_time_in_lead = parseToInt(contact.properties.hs_time_in_lead);
+      const hs_time_in_marketingqualifiedlead = parseToInt(contact.properties.hs_time_in_marketingqualifiedlead);
+      const hs_time_in_opportunity = parseToInt(contact.properties.hs_time_in_opportunity);
+      const hs_time_in_other = parseToInt(contact.properties.hs_time_in_other);
+      const hs_time_in_salesqualifiedlead = parseToInt(contact.properties.hs_time_in_salesqualifiedlead);
+      const hs_time_in_subscriber = parseToInt(contact.properties.hs_time_in_subscriber);
+      const hs_time_to_first_engagement = parseToInt(contact.properties.hs_time_to_first_engagement);
+      const hs_time_to_move_from_lead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_lead_to_customer);
+      const hs_time_to_move_from_marketingqualifiedlead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_marketingqualifiedlead_to_customer);
+      const hs_time_to_move_from_opportunity_to_customer = parseToInt(contact.properties.hs_time_to_move_from_opportunity_to_customer);
+      const hs_time_to_move_from_salesqualifiedlead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_salesqualifiedlead_to_customer);
+      const hs_time_to_move_from_subscriber_to_customer = parseToInt(contact.properties.hs_time_to_move_from_subscriber_to_customer);
+      const recent_deal_amount = parseToDouble(contact.properties.recent_deal_amount);
+      const total_revenue = parseToDouble(contact.properties.total_revenue);
+
+      delete contact.properties.hs_object_id;
+      delete contact.properties.lastmodifieddate;
+
+      const contactObj = {
+        id: contact.id,
+        ...contact.properties,
+        annualrevenue,
+        hs_time_between_contact_creation_and_deal_close,
+        hs_time_between_contact_creation_and_deal_creation,
+        hs_time_in_customer,
+        hs_time_in_evangelist,
+        hs_time_in_lead,
+        hs_time_in_marketingqualifiedlead,
+        hs_time_in_opportunity,
+        hs_time_in_other,
+        hs_time_in_salesqualifiedlead,
+        hs_time_in_subscriber,
+        hs_time_to_first_engagement,
+        hs_time_to_move_from_lead_to_customer,
+        hs_time_to_move_from_marketingqualifiedlead_to_customer,
+        hs_time_to_move_from_opportunity_to_customer,
+        hs_time_to_move_from_salesqualifiedlead_to_customer,
+        hs_time_to_move_from_subscriber_to_customer,
+        recent_deal_amount,
+        total_revenue
+      };
+
+      return await this.contactRepository.save(contactObj);
+    }
+
+    return null;
   }
 
   async bulkCreate(contacts: any) {
     const createdContacts = await Promise.all(
-      contacts.map((contact: any) => console.log())
+      contacts.map((contact: any) => {
+        const annualrevenue = parseToDouble(contact.properties.annualrevenue);
+        const hs_time_between_contact_creation_and_deal_close = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_close);
+        const hs_time_between_contact_creation_and_deal_creation = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_creation);
+        const hs_time_in_customer = parseToInt(contact.properties.hs_time_in_customer);
+        const hs_time_in_evangelist = parseToInt(contact.properties.hs_time_in_evangelist);
+        const hs_time_in_lead = parseToInt(contact.properties.hs_time_in_lead);
+        const hs_time_in_marketingqualifiedlead = parseToInt(contact.properties.hs_time_in_marketingqualifiedlead);
+        const hs_time_in_opportunity = parseToInt(contact.properties.hs_time_in_opportunity);
+        const hs_time_in_other = parseToInt(contact.properties.hs_time_in_other);
+        const hs_time_in_salesqualifiedlead = parseToInt(contact.properties.hs_time_in_salesqualifiedlead);
+        const hs_time_in_subscriber = parseToInt(contact.properties.hs_time_in_subscriber);
+        const hs_time_to_first_engagement = parseToInt(contact.properties.hs_time_to_first_engagement);
+        const hs_time_to_move_from_lead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_lead_to_customer);
+        const hs_time_to_move_from_marketingqualifiedlead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_marketingqualifiedlead_to_customer);
+        const hs_time_to_move_from_opportunity_to_customer = parseToInt(contact.properties.hs_time_to_move_from_opportunity_to_customer);
+        const hs_time_to_move_from_salesqualifiedlead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_salesqualifiedlead_to_customer);
+        const hs_time_to_move_from_subscriber_to_customer = parseToInt(contact.properties.hs_time_to_move_from_subscriber_to_customer);
+        const recent_deal_amount = parseToDouble(contact.properties.recent_deal_amount);
+        const total_revenue = parseToDouble(contact.properties.total_revenue);
+
+        delete contact.properties.hs_object_id;
+        delete contact.properties.lastmodifieddate;
+        
+        const contactObj = {
+          id: contact.id,
+          ...contact.properties,
+          annualrevenue,
+          hs_time_between_contact_creation_and_deal_close,
+          hs_time_between_contact_creation_and_deal_creation,
+          hs_time_in_customer,
+          hs_time_in_evangelist,
+          hs_time_in_lead,
+          hs_time_in_marketingqualifiedlead,
+          hs_time_in_opportunity,
+          hs_time_in_other,
+          hs_time_in_salesqualifiedlead,
+          hs_time_in_subscriber,
+          hs_time_to_first_engagement,
+          hs_time_to_move_from_lead_to_customer,
+          hs_time_to_move_from_marketingqualifiedlead_to_customer,
+          hs_time_to_move_from_opportunity_to_customer,
+          hs_time_to_move_from_salesqualifiedlead_to_customer,
+          hs_time_to_move_from_subscriber_to_customer,
+          recent_deal_amount,
+          total_revenue
+        };
+        
+        this.contactRepository.save(contactObj);
+      })
     );
   }
 
@@ -30,7 +131,7 @@ export class ContactService {
 
     while (allowToContinue) {
       const contacts = await this.contactHubspotApiService.findAll(findParams);
-
+      
       (contacts.paging?.next.after) ?
         findParams.after = contacts.paging.next.after :
         allowToContinue = false;
@@ -39,19 +140,78 @@ export class ContactService {
     }
   }
 
-  async findAll(findParams: any) {
-    return await this.contactHubspotApiService.findAll(findParams);
+  async findAll() {
+    return await this.contactRepository.find();
   }
 
   async findOne(id: string) {
-    return await this.contactHubspotApiService.findOne(id);
+    return await this.contactRepository.findOneBy({ id });
   }
 
-  update(id: string, updateContactDto: UpdateContactDto) {
-    return `This action updates a #${id} contact`;
+  async update(id: string) {    
+    const contact = await this.contactHubspotApiService.findOne(id);
+
+    if (contact) {
+      const annualrevenue = parseToDouble(contact.properties.annualrevenue);
+      const hs_time_between_contact_creation_and_deal_close = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_close);
+      const hs_time_between_contact_creation_and_deal_creation = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_creation);
+      const hs_time_in_customer = parseToInt(contact.properties.hs_time_in_customer);
+      const hs_time_in_evangelist = parseToInt(contact.properties.hs_time_in_evangelist);
+      const hs_time_in_lead = parseToInt(contact.properties.hs_time_in_lead);
+      const hs_time_in_marketingqualifiedlead = parseToInt(contact.properties.hs_time_in_marketingqualifiedlead);
+      const hs_time_in_opportunity = parseToInt(contact.properties.hs_time_in_opportunity);
+      const hs_time_in_other = parseToInt(contact.properties.hs_time_in_other);
+      const hs_time_in_salesqualifiedlead = parseToInt(contact.properties.hs_time_in_salesqualifiedlead);
+      const hs_time_in_subscriber = parseToInt(contact.properties.hs_time_in_subscriber);
+      const hs_time_to_first_engagement = parseToInt(contact.properties.hs_time_to_first_engagement);
+      const hs_time_to_move_from_lead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_lead_to_customer);
+      const hs_time_to_move_from_marketingqualifiedlead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_marketingqualifiedlead_to_customer);
+      const hs_time_to_move_from_opportunity_to_customer = parseToInt(contact.properties.hs_time_to_move_from_opportunity_to_customer);
+      const hs_time_to_move_from_salesqualifiedlead_to_customer = parseToInt(contact.properties.hs_time_to_move_from_salesqualifiedlead_to_customer);
+      const hs_time_to_move_from_subscriber_to_customer = parseToInt(contact.properties.hs_time_to_move_from_subscriber_to_customer);
+      const recent_deal_amount = parseToDouble(contact.properties.recent_deal_amount);
+      const total_revenue = parseToDouble(contact.properties.total_revenue);
+
+      delete contact.properties.hs_object_id;
+      delete contact.properties.lastmodifieddate;
+
+      const contactObj = {
+        id: contact.id,
+        ...contact.properties,
+        annualrevenue,
+        hs_time_between_contact_creation_and_deal_close,
+        hs_time_between_contact_creation_and_deal_creation,
+        hs_time_in_customer,
+        hs_time_in_evangelist,
+        hs_time_in_lead,
+        hs_time_in_marketingqualifiedlead,
+        hs_time_in_opportunity,
+        hs_time_in_other,
+        hs_time_in_salesqualifiedlead,
+        hs_time_in_subscriber,
+        hs_time_to_first_engagement,
+        hs_time_to_move_from_lead_to_customer,
+        hs_time_to_move_from_marketingqualifiedlead_to_customer,
+        hs_time_to_move_from_opportunity_to_customer,
+        hs_time_to_move_from_salesqualifiedlead_to_customer,
+        hs_time_to_move_from_subscriber_to_customer,
+        recent_deal_amount,
+        total_revenue
+      };
+
+      return await this.contactRepository.update(id, contactObj);
+    }
+
+    return null;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} contact`;
+  async remove(id: string) {
+    const contact = await this.findOne(id);
+
+    if (contact) {
+      return await this.contactRepository.delete(id);
+    }
+
+    return null;
   }
 }
