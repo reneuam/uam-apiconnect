@@ -49,7 +49,7 @@ export class Deal {
   @Column()
 	funell_stage: string;
   @Column()
-	growth_potential: number;
+	growth_potential: string;
   @Column()
 	headcount_needed: number;
   @Column()
@@ -58,6 +58,8 @@ export class Deal {
 	hs_campaign: string;
   @Column()
 	hs_date_entered_closedwon: Date;
+  @Column()
+  hs_lastmodifieddate: Date;
   @Column()
 	hs_is_closed_won: number;
   @Column()
