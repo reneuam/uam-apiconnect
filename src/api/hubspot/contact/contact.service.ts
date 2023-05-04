@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { ContactHubspotApiService } from 'src/common/services/hubspot/contact-hubspot.service';
 import { Contact } from './entities/contact.entity';
 import { parseToDouble, parseToInt } from 'src/common/utils/number-parser';
+import { ContactProperties } from 'src/common/constants/hubspot-contact-properties';
 
 @Injectable()
 export class ContactService {
@@ -14,6 +15,7 @@ export class ContactService {
   ) {}
 
   async create(id: string) {
+    console.log('Create contact id', id);
     const contact = await this.contactHubspotApiService.findOne(id);
 
     if (contact) {
@@ -36,9 +38,6 @@ export class ContactService {
       const hs_time_to_move_from_subscriber_to_customer = parseToInt(contact.properties.hs_time_to_move_from_subscriber_to_customer);
       const recent_deal_amount = parseToDouble(contact.properties.recent_deal_amount);
       const total_revenue = parseToDouble(contact.properties.total_revenue);
-
-      delete contact.properties.hs_object_id;
-      delete contact.properties.lastmodifieddate;
 
       const contactObj = {
         id: contact.id,
@@ -64,15 +63,24 @@ export class ContactService {
         total_revenue
       };
 
-      return await this.contactRepository.save(contactObj);
+      const properties = ContactProperties;
+
+      const contactFilteredObj = Object.keys(contactObj)
+        .filter(key => properties.includes(key))
+        .reduce((newObj, key) => {
+          newObj[key] = contactObj[key];
+          return newObj;
+        }, {});
+
+      return await this.contactRepository.save(contactFilteredObj);
     }
 
     return null;
   }
 
   async bulkCreate(contacts: any) {
-    const createdContacts = await Promise.all(
-      contacts.map((contact: any) => {
+    return await Promise.all(
+      contacts.map((contact: any) => {        
         const annualrevenue = parseToDouble(contact.properties.annualrevenue);
         const hs_time_between_contact_creation_and_deal_close = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_close);
         const hs_time_between_contact_creation_and_deal_creation = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_creation);
@@ -92,9 +100,6 @@ export class ContactService {
         const hs_time_to_move_from_subscriber_to_customer = parseToInt(contact.properties.hs_time_to_move_from_subscriber_to_customer);
         const recent_deal_amount = parseToDouble(contact.properties.recent_deal_amount);
         const total_revenue = parseToDouble(contact.properties.total_revenue);
-
-        delete contact.properties.hs_object_id;
-        delete contact.properties.lastmodifieddate;
         
         const contactObj = {
           id: contact.id,
@@ -119,8 +124,17 @@ export class ContactService {
           recent_deal_amount,
           total_revenue
         };
+
+        const properties = ContactProperties;
+
+        const contactFilteredObj = Object.keys(contactObj)
+          .filter(key => properties.includes(key))
+          .reduce((newObj, key) => {
+            newObj[key] = contactObj[key];
+            return newObj;
+          }, {});
         
-        this.contactRepository.save(contactObj);
+        this.contactRepository.save(contactFilteredObj);
       })
     );
   }
@@ -148,7 +162,8 @@ export class ContactService {
     return await this.contactRepository.findOneBy({ id });
   }
 
-  async update(id: string) {    
+  async update(id: string) {
+    console.log('Update contact id', id);
     const contact = await this.contactHubspotApiService.findOne(id);
 
     if (contact) {
@@ -171,9 +186,6 @@ export class ContactService {
       const hs_time_to_move_from_subscriber_to_customer = parseToInt(contact.properties.hs_time_to_move_from_subscriber_to_customer);
       const recent_deal_amount = parseToDouble(contact.properties.recent_deal_amount);
       const total_revenue = parseToDouble(contact.properties.total_revenue);
-
-      delete contact.properties.hs_object_id;
-      delete contact.properties.lastmodifieddate;
 
       const contactObj = {
         id: contact.id,
@@ -199,13 +211,23 @@ export class ContactService {
         total_revenue
       };
 
-      return await this.contactRepository.update(id, contactObj);
+      const properties = ContactProperties;
+
+      const contactFilteredObj = Object.keys(contactObj)
+        .filter(key => properties.includes(key))
+        .reduce((newObj, key) => {
+          newObj[key] = contactObj[key];
+          return newObj;
+        }, {});
+
+      return await this.contactRepository.update(id, contactFilteredObj);
     }
 
     return null;
   }
 
   async remove(id: string) {
+    console.log('Remove contact id', id);
     const contact = await this.findOne(id);
 
     if (contact) {
