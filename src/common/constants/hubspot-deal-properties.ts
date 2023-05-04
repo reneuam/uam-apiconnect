@@ -27,6 +27,7 @@ export const DealProperties = [
   'hs_campaign',
   'hs_date_entered_closedwon',
   'hs_is_closed_won',
+  'hs_lastmodifieddate',
   'lead_source__deal_',
   'paid',
   'payment_date',
