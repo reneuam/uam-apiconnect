@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';``
 import axios from 'axios';
-import hubspot from '@hubspot/api-client';
 
 @Injectable()
 export class HubspotService {
