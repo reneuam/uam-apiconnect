@@ -17,53 +17,130 @@ export class DealService {
 
   async create(id: string) {
     console.log('Create deal id', id);
-    const deal = await this.dealHubspotApiService.findOne(id);
+    try {
+      const deal = await this.dealHubspotApiService.findOne(id);
 
-    if (deal) {
-      const agent_acount = parseToInt(deal.properties.agent_acount);
-      const amount = parseToDouble(deal.properties.amount);
-      const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
-      const contract_value = parseToDouble(deal.properties.contract_value);
-      const headcount_needed = parseToInt(deal.properties.headcount_needed);        
-      const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
-      const paid = boolStringToInt(deal.properties.paid);
-      const price_per_hour = parseToDouble(deal.properties.price_per_hour);
-      const reactivation = boolStringToInt(deal.properties.reactivation);
-      const sales_cycle = parseToInt(deal.properties.sales_cycle);
+      if (deal) {
+        const agent_acount = parseToInt(deal.properties.agent_acount);
+        const amount = parseToDouble(deal.properties.amount);
+        const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
+        const contract_value = parseToDouble(deal.properties.contract_value);
+        const headcount_needed = parseToInt(deal.properties.headcount_needed);        
+        const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+        const paid = boolStringToInt(deal.properties.paid);
+        const price_per_hour = parseToDouble(deal.properties.price_per_hour);
+        const reactivation = boolStringToInt(deal.properties.reactivation);
+        const sales_cycle = parseToInt(deal.properties.sales_cycle);
 
-      const dealObj = {
-        id: deal.id,
-        ...deal.properties,
-        agent_acount,
-        amount,
-        amount_in_home_currency,
-        contract_value,
-        headcount_needed,
-        hs_is_closed_won,
-        paid,
-        price_per_hour,
-        reactivation,
-        sales_cycle
-      };
-      
-      const properties = DealProperties;
+        const dealObj = {
+          id: deal.id,
+          ...deal.properties,
+          agent_acount,
+          amount,
+          amount_in_home_currency,
+          contract_value,
+          headcount_needed,
+          hs_is_closed_won,
+          paid,
+          price_per_hour,
+          reactivation,
+          sales_cycle
+        };
+        
+        const properties = DealProperties;
 
-      const dealFilteredObj = Object.keys(dealObj)
-        .filter(key => properties.includes(key))
-        .reduce((newObj, key) => {
-          newObj[key] = dealObj[key];
-          return newObj;
-        }, {});
+        const dealFilteredObj = Object.keys(dealObj)
+          .filter(key => properties.includes(key))
+          .reduce((newObj, key) => {
+            newObj[key] = dealObj[key];
+            return newObj;
+          }, {});
 
-      return await this.dealRepository.save(dealFilteredObj);
+        return await this.dealRepository.save(dealFilteredObj);
+      }
+
+      return null;
+    } catch (error) {
+      console.log('Error', error);
     }
-
-    return null;
   }
 
   async bulkCreate(deals: any) {
-    return await Promise.all(
-      deals.map((deal: any) => {        
+    try {
+      return await Promise.all(
+        deals.map((deal: any) => {        
+          const agent_acount = parseToInt(deal.properties.agent_acount);
+          const amount = parseToDouble(deal.properties.amount);
+          const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
+          const contract_value = parseToDouble(deal.properties.contract_value);
+          const headcount_needed = parseToInt(deal.properties.headcount_needed);        
+          const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+          const paid = boolStringToInt(deal.properties.paid);
+          const price_per_hour = parseToDouble(deal.properties.price_per_hour);
+          const reactivation = boolStringToInt(deal.properties.reactivation);
+          const sales_cycle = parseToInt(deal.properties.sales_cycle);
+
+          const dealObj = {
+            id: deal.id,
+            ...deal.properties,
+            agent_acount,
+            amount,
+            amount_in_home_currency,
+            contract_value,
+            headcount_needed,
+            hs_is_closed_won,
+            paid,
+            price_per_hour,
+            reactivation,
+            sales_cycle
+          };
+
+          const properties = DealProperties;
+
+          const dealFilteredObj = Object.keys(dealObj)
+            .filter(key => properties.includes(key))
+            .reduce((newObj, key) => {
+              newObj[key] = dealObj[key];
+              return newObj;
+            }, {});
+
+          this.dealRepository.save(dealFilteredObj);
+        })
+      );
+    } catch (error) {
+      console.log('Error', error);
+    }
+  }
+
+  async migrate() {
+    let findParams = { after: undefined };
+    let allowToContinue = true;
+
+    while (allowToContinue) {
+      const deals = await this.dealHubspotApiService.findAll(findParams);
+
+      (deals.paging?.next.after) ?
+        findParams.after = deals.paging.next.after :
+        allowToContinue = false;
+
+      await this.bulkCreate(deals.results);
+    }
+  }
+
+  async findAll() {
+    return await this.dealRepository.find();
+  }
+
+  async findOne(id: string) {
+    return await this.dealRepository.findOneBy({ id });
+  }
+
+  async update(id: string) {
+    console.log('update deal id', id);
+    try {
+      const deal = await this.dealHubspotApiService.findOne(id);
+
+      if (deal) {
         const agent_acount = parseToInt(deal.properties.agent_acount);
         const amount = parseToDouble(deal.properties.amount);
         const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
@@ -99,89 +176,27 @@ export class DealService {
             return newObj;
           }, {});
 
-        this.dealRepository.save(dealFilteredObj);
-      })
-    );
-  }
+        return await this.dealRepository.update(id, dealFilteredObj);
+      }
 
-  async migrate() {
-    let findParams = { after: undefined };
-    let allowToContinue = true;
-
-    while (allowToContinue) {
-      const deals = await this.dealHubspotApiService.findAll(findParams);
-
-      (deals.paging?.next.after) ?
-        findParams.after = deals.paging.next.after :
-        allowToContinue = false;
-
-      await this.bulkCreate(deals.results);
+      return null;
+    } catch (error) {
+      console.log('Error', error);
     }
-  }
-
-  async findAll() {
-    return await this.dealRepository.find();
-  }
-
-  async findOne(id: string) {
-    return await this.dealRepository.findOneBy({ id });
-  }
-
-  async update(id: string) {
-    console.log('update deal id', id);
-    const deal = await this.dealHubspotApiService.findOne(id);
-
-    if (deal) {
-      const agent_acount = parseToInt(deal.properties.agent_acount);
-      const amount = parseToDouble(deal.properties.amount);
-      const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
-      const contract_value = parseToDouble(deal.properties.contract_value);
-      const headcount_needed = parseToInt(deal.properties.headcount_needed);        
-      const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
-      const paid = boolStringToInt(deal.properties.paid);
-      const price_per_hour = parseToDouble(deal.properties.price_per_hour);
-      const reactivation = boolStringToInt(deal.properties.reactivation);
-      const sales_cycle = parseToInt(deal.properties.sales_cycle);
-
-      const dealObj = {
-        id: deal.id,
-        ...deal.properties,
-        agent_acount,
-        amount,
-        amount_in_home_currency,
-        contract_value,
-        headcount_needed,
-        hs_is_closed_won,
-        paid,
-        price_per_hour,
-        reactivation,
-        sales_cycle
-      };
-
-      const properties = DealProperties;
-
-      const dealFilteredObj = Object.keys(dealObj)
-        .filter(key => properties.includes(key))
-        .reduce((newObj, key) => {
-          newObj[key] = dealObj[key];
-          return newObj;
-        }, {});
-
-      return await this.dealRepository.update(id, dealFilteredObj);
-    }
-
-    return null;
   }
 
   async remove(id: string) {
     console.log('Remove deal id', id);
-    
-    const deal = await this.findOne(id);
+    try {
+      const deal = await this.findOne(id);
 
-    if (deal) {
-      return await this.dealRepository.delete(id);
+      if (deal) {
+        return await this.dealRepository.delete(id);
+      }
+
+      return null;
+    } catch (error) {
+      console.log('Error', error);
     }
-
-    return null;
   }
 }
