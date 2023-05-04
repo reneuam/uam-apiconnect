@@ -16,10 +16,7 @@ import { ApiHubspotModule } from './common/services/hubspot/api-hubspot.module';
       username  : process.env.DATABASE_USER,
       password  : process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE,
-      autoLoadEntities: true,
-      extra : {
-        connectionLimit: 100
-      }
+      autoLoadEntities: true
     }),
     ApiHubspotModule,
     HttpModule,
