@@ -67,6 +67,8 @@ export class Contact {
   @Column()
 	fax: string;
   @Column()
+	firstname: string;
+  @Column()
 	first_conversion_date: Date;
   @Column()
 	first_conversion_event_name: string;
@@ -222,6 +224,8 @@ export class Contact {
 	job_description: string;
   @Column()
 	job_description_other: string;
+  @Column()
+  lastmodifieddate: Date;
   @Column()
 	lastname: string;
   @Column()
