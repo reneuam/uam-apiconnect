@@ -11,24 +11,29 @@ export class HubspotController {
   ) {}
 
   @Post()
-  async webhook(@Body() body: any) {
-    if (body.subscriptionType === HubspotSubscriptionType.contactCreated) {
-      this.contactService.create(body);
-    }
-    if (body.subscriptionType === HubspotSubscriptionType.contactUpdated) {
-      this.contactService.update(body);
-    }
-    if (body.subscriptionType === HubspotSubscriptionType.contactDeleted) {
-      this.contactService.remove(body);
-    }
-    if (body.subscriptionType === HubspotSubscriptionType.dealCreated) {
-      this.dealService.create(body);
-    }
-    if (body.subscriptionType === HubspotSubscriptionType.dealUpdated) {
-      this.dealService.update(body);
-    }
-    if (body.subscriptionType === HubspotSubscriptionType.dealDeleted) {
-      this.dealService.remove(body);
-    }
+  async webhook(@Body() events: any) {
+    events.forEach(event => {
+      const subscriptionType = event.subscriptionType;
+      const objectId = event.objectId;   
+
+      if (subscriptionType === HubspotSubscriptionType.contactCreated) {
+        this.contactService.create(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.contactUpdated) {
+        this.contactService.update(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.contactDeleted) {
+        this.contactService.remove(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.dealCreated) {
+        this.dealService.create(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.dealUpdated) {
+        this.dealService.update(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.dealDeleted) {
+        this.dealService.remove(objectId.toString());
+      }
+    });
   }
 }
