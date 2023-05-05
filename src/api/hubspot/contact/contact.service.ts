@@ -15,7 +15,6 @@ export class ContactService {
   ) {}
 
   async create(id: string) {
-    console.log('Create contact id', id);
     try {
       const contact = await this.contactHubspotApiService.findOne(id);
 
@@ -171,7 +170,6 @@ export class ContactService {
   }
 
   async update(id: string) {
-    console.log('Update contact id', id);
     try {
       const contact = await this.contactHubspotApiService.findOne(id);
 
@@ -239,7 +237,6 @@ export class ContactService {
   }
 
   async remove(id: string) {
-    console.log('Remove contact id', id);
     try {
       const contact = await this.findOne(id);
 

@@ -16,7 +16,6 @@ export class DealService {
   ) {}
 
   async create(id: string) {
-    console.log('Create deal id', id);
     try {
       const deal = await this.dealHubspotApiService.findOne(id);
 
@@ -136,7 +135,6 @@ export class DealService {
   }
 
   async update(id: string) {
-    console.log('update deal id', id);
     try {
       const deal = await this.dealHubspotApiService.findOne(id);
 
@@ -186,7 +184,6 @@ export class DealService {
   }
 
   async remove(id: string) {
-    console.log('Remove deal id', id);
     try {
       const deal = await this.findOne(id);
 
