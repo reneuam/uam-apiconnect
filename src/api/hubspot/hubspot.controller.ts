@@ -14,7 +14,7 @@ export class HubspotController {
   async webhook(@Body() events: any) {
     events.forEach(event => {
       const subscriptionType = event.subscriptionType;
-      const objectId = event.objectId;   
+      const objectId = event.objectId;
 
       if (subscriptionType === HubspotSubscriptionType.contactCreated) {
         this.contactService.create(objectId.toString());
@@ -26,7 +26,7 @@ export class HubspotController {
         this.contactService.remove(objectId.toString());
       }
       if (subscriptionType === HubspotSubscriptionType.contactRestored) {
-        console.log('Contact restored');
+        this.contactService.create(objectId.toString());
       }
       if (subscriptionType === HubspotSubscriptionType.dealCreated) {
         this.dealService.create(objectId.toString());
@@ -38,7 +38,7 @@ export class HubspotController {
         this.dealService.remove(objectId.toString());
       }
       if (subscriptionType === HubspotSubscriptionType.dealRestored) {
-        console.log('Deal restored');
+        this.dealService.create(objectId.toString());
       }
       if (subscriptionType === HubspotSubscriptionType.ticketCreated) {
         console.log('Ticket created');
