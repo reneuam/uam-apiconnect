@@ -1,8 +1,15 @@
 import { Injectable } from '@nestjs/common';``
 import axios from 'axios';
+import { ContactService } from './contact/contact.service';
+import { DealService } from './deal/deal.service';
 
 @Injectable()
 export class HubspotService {
+  constructor(
+    private readonly contactService: ContactService,
+    private readonly dealService: DealService
+  ) {}
+
   async authorize() {
     const refreshTokenFormData = {
       grant_type: 'refresh_token',

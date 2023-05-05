@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
@@ -9,6 +10,7 @@ import { ApiHubspotModule } from './common/services/hubspot/api-hubspot.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: process.env.DATABASE_TYPE as any,
       host: process.env.DATABASE_HOST,
