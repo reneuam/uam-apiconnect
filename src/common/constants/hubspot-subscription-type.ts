@@ -5,4 +5,7 @@ export class HubspotSubscriptionType {
   static readonly dealCreated = 'deal.creation';
   static readonly dealUpdated = 'deal.propertyChange';
   static readonly dealDeleted = 'deal.deletion';
+  static readonly ticketCreated = 'ticket.creation';
+  static readonly ticketUpdated = 'ticket.propertyChange';
+  static readonly ticketDeleted = 'ticket.deletion';
 }
