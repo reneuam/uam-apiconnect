@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { HubspotSubscriptionType } from 'src/common/constants/hubspot-subscription-type';
 import { ContactService } from './contact/contact.service';
 import { DealService } from './deal/deal.service';
