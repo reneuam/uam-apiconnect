@@ -25,6 +25,9 @@ export class HubspotController {
       if (subscriptionType === HubspotSubscriptionType.contactDeleted) {
         this.contactService.remove(objectId.toString());
       }
+      if (subscriptionType === HubspotSubscriptionType.contactRestored) {
+        console.log('Contact restored');
+      }
       if (subscriptionType === HubspotSubscriptionType.dealCreated) {
         this.dealService.create(objectId.toString());
       }
@@ -33,6 +36,21 @@ export class HubspotController {
       }
       if (subscriptionType === HubspotSubscriptionType.dealDeleted) {
         this.dealService.remove(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.dealRestored) {
+        console.log('Deal restored');
+      }
+      if (subscriptionType === HubspotSubscriptionType.ticketCreated) {
+        console.log('Ticket created');
+      }
+      if (subscriptionType === HubspotSubscriptionType.ticketUpdated) {
+        console.log('Ticket updated');
+      }
+      if (subscriptionType === HubspotSubscriptionType.ticketDeleted) {
+        console.log('Ticket deleted');
+      }
+      if (subscriptionType === HubspotSubscriptionType.ticketRestored) {
+        console.log('Ticket restored');
       }
     });
   }
