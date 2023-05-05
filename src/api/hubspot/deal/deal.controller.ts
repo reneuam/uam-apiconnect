@@ -10,7 +10,7 @@ export class DealController {
     const after = (queryParams.after) ? queryParams.after : undefined;
     const findParams = { after };
 
-    return this.dealService.migrate();
+    return this.dealService.findAll();
   }
 
   @Get(':id')

@@ -10,7 +10,7 @@ export class ContactController {
     const after = (queryParams.after) ? queryParams.after : undefined;
     const findParams = { after };
 
-    return this.contactService.migrate();
+    return this.contactService.findAll();
   }
 
   @Get(':id')
