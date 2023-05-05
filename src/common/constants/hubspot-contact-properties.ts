@@ -100,6 +100,7 @@ export const ContactProperties = [
   'hs_time_to_move_from_opportunity_to_customer',
   'hs_time_to_move_from_salesqualifiedlead_to_customer',
   'hs_time_to_move_from_subscriber_to_customer',
+  'id',
   'industry',
   'ip_city',
   'ip_country',
