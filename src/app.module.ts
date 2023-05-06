@@ -3,10 +3,11 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HttpModule } from '@nestjs/axios';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HubspotModule } from './api/hubspot/hubspot.module';
 import { ApiHubspotModule } from './common/services/hubspot/api-hubspot.module';
+import { DealModule } from './api/hubspot/deal/deal.module';
+import { ContactModule } from './api/hubspot/contact/contact.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -21,10 +22,11 @@ import { ApiHubspotModule } from './common/services/hubspot/api-hubspot.module';
       autoLoadEntities: true
     }),
     ApiHubspotModule,
+    ContactModule,
+    DealModule,
     HttpModule,
     HubspotModule
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
