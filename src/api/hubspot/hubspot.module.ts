@@ -3,9 +3,10 @@ import { HubspotService } from './hubspot.service';
 import { ContactModule } from './contact/contact.module';
 import { DealModule } from './deal/deal.module';
 import { HubspotController } from './hubspot.controller';
+import { TicketModule } from './ticket/ticket.module';
 
 @Module({
-  imports: [ContactModule, DealModule],
+  imports: [ContactModule, DealModule, TicketModule],
   providers: [HubspotService],
   exports: [HubspotService],
   controllers: [HubspotController]
