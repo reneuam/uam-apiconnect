@@ -26,6 +26,7 @@ export class DealService {
         const contract_value = parseToDouble(deal.properties.contract_value);
         const headcount_needed = parseToInt(deal.properties.headcount_needed);        
         const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+        const hubspot_owner_id = parseToInt(deal.properties.hubspot_owner_id);
         const paid = boolStringToInt(deal.properties.paid);
         const price_per_hour = parseToDouble(deal.properties.price_per_hour);
         const reactivation = boolStringToInt(deal.properties.reactivation);
@@ -40,6 +41,7 @@ export class DealService {
           contract_value,
           headcount_needed,
           hs_is_closed_won,
+          hubspot_owner_id,
           paid,
           price_per_hour,
           reactivation,
@@ -74,6 +76,7 @@ export class DealService {
           const contract_value = parseToDouble(deal.properties.contract_value);
           const headcount_needed = parseToInt(deal.properties.headcount_needed);        
           const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+          const hubspot_owner_id = parseToInt(deal.properties.hubspot_owner_id);
           const paid = boolStringToInt(deal.properties.paid);
           const price_per_hour = parseToDouble(deal.properties.price_per_hour);
           const reactivation = boolStringToInt(deal.properties.reactivation);
@@ -88,6 +91,7 @@ export class DealService {
             contract_value,
             headcount_needed,
             hs_is_closed_won,
+            hubspot_owner_id,
             paid,
             price_per_hour,
             reactivation,
@@ -145,6 +149,7 @@ export class DealService {
         const contract_value = parseToDouble(deal.properties.contract_value);
         const headcount_needed = parseToInt(deal.properties.headcount_needed);        
         const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+        const hubspot_owner_id = parseToInt(deal.properties.hubspot_owner_id);
         const paid = boolStringToInt(deal.properties.paid);
         const price_per_hour = parseToDouble(deal.properties.price_per_hour);
         const reactivation = boolStringToInt(deal.properties.reactivation);
@@ -158,6 +163,7 @@ export class DealService {
           amount_in_home_currency,
           contract_value,
           headcount_needed,
+          hubspot_owner_id,
           hs_is_closed_won,
           paid,
           price_per_hour,

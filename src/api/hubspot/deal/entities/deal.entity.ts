@@ -63,6 +63,8 @@ export class Deal {
   @Column()
 	hs_is_closed_won: number;
   @Column()
+  hubspot_owner_id: number;
+  @Column()
 	lead_source__deal_: string;
   @Column()
 	paid: number;

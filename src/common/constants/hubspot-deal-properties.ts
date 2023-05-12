@@ -28,6 +28,7 @@ export const DealProperties = [
   'hs_date_entered_closedwon',
   'hs_is_closed_won',
   'hs_lastmodifieddate',
+  'hubspot_owner_id',
   'id',
   'lead_source__deal_',
   'paid',
