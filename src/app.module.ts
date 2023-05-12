@@ -8,6 +8,7 @@ import { HubspotModule } from './api/hubspot/hubspot.module';
 import { ApiHubspotModule } from './common/services/hubspot/api-hubspot.module';
 import { DealModule } from './api/hubspot/deal/deal.module';
 import { ContactModule } from './api/hubspot/contact/contact.module';
+import { TicketModule } from './api/hubspot/ticket/ticket.module';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -25,7 +26,8 @@ import { ContactModule } from './api/hubspot/contact/contact.module';
     ContactModule,
     DealModule,
     HttpModule,
-    HubspotModule
+    HubspotModule,
+    TicketModule
   ],
   providers: [AppService],
 })
