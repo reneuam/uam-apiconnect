@@ -84,7 +84,7 @@ export class ContactService {
   async bulkCreate(contacts: any) {
     try {
       return await Promise.all(
-        contacts.map((contact: any) => {        
+        contacts.map((contact: any) => {      
           const annualrevenue = parseToDouble(contact.properties.annualrevenue);
           const hs_time_between_contact_creation_and_deal_close = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_close);
           const hs_time_between_contact_creation_and_deal_creation = parseToInt(contact.properties.hs_time_between_contact_creation_and_deal_creation);
