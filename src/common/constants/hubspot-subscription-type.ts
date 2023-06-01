@@ -1,4 +1,8 @@
 export class HubspotSubscriptionType {
+  static readonly companyCreated = 'company.creation';
+  static readonly companyUpdated = 'company.propertyChange';
+  static readonly companyDeleted = 'company.deletion';
+  static readonly companyRestored = 'company.restore';
   static readonly contactCreated = 'contact.creation';
   static readonly contactUpdated = 'contact.propertyChange';
   static readonly contactDeleted = 'contact.deletion';

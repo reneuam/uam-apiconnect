@@ -6,8 +6,9 @@ import { HttpModule } from '@nestjs/axios';
 import { AppService } from './app.service';
 import { HubspotModule } from './api/hubspot/hubspot.module';
 import { ApiHubspotModule } from './common/services/hubspot/api-hubspot.module';
-import { DealModule } from './api/hubspot/deal/deal.module';
+import { CompanyModule } from './api/hubspot/company/company.module';
 import { ContactModule } from './api/hubspot/contact/contact.module';
+import { DealModule } from './api/hubspot/deal/deal.module';
 import { TicketModule } from './api/hubspot/ticket/ticket.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { TicketModule } from './api/hubspot/ticket/ticket.module';
       autoLoadEntities: true
     }),
     ApiHubspotModule,
+    CompanyModule,
     ContactModule,
     DealModule,
     HttpModule,

@@ -1,5 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { HubspotSubscriptionType } from 'src/common/constants/hubspot-subscription-type';
+import { CompanyService } from './company/company.service';
 import { ContactService } from './contact/contact.service';
 import { DealService } from './deal/deal.service';
 import { TicketService } from './ticket/ticket.service';
@@ -7,6 +8,7 @@ import { TicketService } from './ticket/ticket.service';
 @Controller('hubspot')
 export class HubspotController {
   constructor(
+    private readonly companyService: CompanyService,
     private readonly contactService: ContactService,
     private readonly dealService: DealService,
     private readonly ticketService: TicketService
@@ -18,6 +20,21 @@ export class HubspotController {
       const subscriptionType = event.subscriptionType;
       const objectId = event.objectId;
 
+      console.log('Ev', event.subscriptionType, event.objectId);
+      
+
+      if (subscriptionType === HubspotSubscriptionType.companyCreated) {
+        this.companyService.create(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.companyUpdated) {
+        this.companyService.update(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.companyDeleted) {
+        this.companyService.remove(objectId.toString());
+      }
+      if (subscriptionType === HubspotSubscriptionType.companyRestored) {
+        this.companyService.create(objectId.toString());
+      }
       if (subscriptionType === HubspotSubscriptionType.contactCreated) {
         this.contactService.create(objectId.toString());
       }

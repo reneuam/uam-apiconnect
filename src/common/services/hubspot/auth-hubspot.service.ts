@@ -10,7 +10,7 @@ export class AuthHubspotApiService {
       client_secret: process.env.HUBSPOT_CLIENT_SECRET,
       redirect_uri: process.env.HUBSPOT_REDIRECT_URI,
       refresh_token: process.env.HUBSPOT_REFRESH_TOKEN
-    };
+    };    
 
     const url = 'https://api.hubapi.com/oauth/v1/token';
 
