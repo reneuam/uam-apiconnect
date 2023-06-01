@@ -21,8 +21,8 @@ export class TicketService {
       if (ticket) {
         const amount_of_candidates = parseToInt(ticket.properties.amount_of_candidates);
         const created_by = parseToInt(ticket.properties.created_by);
-        const hs_num_associated_companies = parseToInt(ticket.properties.hs_number_associated_companies);
-        const hs_num_times_contacted = parseToInt(ticket.properties.hs_number_times_contacted);
+        const hs_num_associated_companies = parseToInt(ticket.properties.hs_num_associated_companies);
+        const hs_num_times_contacted = parseToInt(ticket.properties.hs_num_times_contacted);
         const hs_object_id = parseToInt(ticket.properties.hs_object_id);
         const hs_ticket_id = parseToInt(ticket.properties.hs_ticket_id);
         const hs_time_in_1 = parseToInt(ticket.properties.hs_time_in_1);
@@ -156,8 +156,8 @@ export class TicketService {
       if (ticket) {
         const amount_of_candidates = parseToInt(ticket.properties.amount_of_candidates);
         const created_by = parseToInt(ticket.properties.created_by);
-        const hs_num_associated_companies = parseToInt(ticket.properties.number_associated_companies);
-        const hs_num_times_contacted = parseToInt(ticket.properties.number_times_contacted);
+        const hs_num_associated_companies = parseToInt(ticket.properties.hs_num_associated_companies);
+        const hs_num_times_contacted = parseToInt(ticket.properties.hs_num_times_contacted);
         const hs_object_id = parseToInt(ticket.properties.hs_object_id);
         const hs_ticket_id = parseToInt(ticket.properties.hs_ticket_id);
         const hs_time_in_1 = parseToInt(ticket.properties.hs_time_in_1);
