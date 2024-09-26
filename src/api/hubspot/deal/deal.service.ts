@@ -12,7 +12,7 @@ export class DealService {
   constructor(
     private readonly dealHubspotApiService: DealHubspotApiService,
     @InjectRepository(Deal)
-    private readonly dealRepository: Repository<Deal>
+    private readonly dealRepository: Repository<Deal>,
   ) {}
 
   async create(id: string) {
@@ -22,10 +22,14 @@ export class DealService {
       if (deal) {
         const agent_acount = parseToInt(deal.properties.agent_acount);
         const amount = parseToDouble(deal.properties.amount);
-        const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
+        const amount_in_home_currency = parseToDouble(
+          deal.properties.amount_in_home_currency,
+        );
         const contract_value = parseToDouble(deal.properties.contract_value);
-        const headcount_needed = parseToInt(deal.properties.headcount_needed);        
-        const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+        const headcount_needed = parseToInt(deal.properties.headcount_needed);
+        const hs_is_closed_won = boolStringToInt(
+          deal.properties.hs_is_closed_won,
+        );
         const hubspot_owner_id = parseToInt(deal.properties.hubspot_owner_id);
         const paid = boolStringToInt(deal.properties.paid);
         const price_per_hour = parseToDouble(deal.properties.price_per_hour);
@@ -45,13 +49,13 @@ export class DealService {
           paid,
           price_per_hour,
           reactivation,
-          sales_cycle
+          sales_cycle,
         };
-        
+
         const properties = DealProperties;
 
         const dealFilteredObj = Object.keys(dealObj)
-          .filter(key => properties.includes(key))
+          .filter((key) => properties.includes(key))
           .reduce((newObj, key) => {
             newObj[key] = dealObj[key];
             return newObj;
@@ -69,13 +73,17 @@ export class DealService {
   async bulkCreate(deals: any) {
     try {
       return await Promise.all(
-        deals.map((deal: any) => {        
+        deals.map(async (deal: any) => {
           const agent_acount = parseToInt(deal.properties.agent_acount);
           const amount = parseToDouble(deal.properties.amount);
-          const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
+          const amount_in_home_currency = parseToDouble(
+            deal.properties.amount_in_home_currency,
+          );
           const contract_value = parseToDouble(deal.properties.contract_value);
-          const headcount_needed = parseToInt(deal.properties.headcount_needed);        
-          const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+          const headcount_needed = parseToInt(deal.properties.headcount_needed);
+          const hs_is_closed_won = boolStringToInt(
+            deal.properties.hs_is_closed_won,
+          );
           const hubspot_owner_id = parseToInt(deal.properties.hubspot_owner_id);
           const paid = boolStringToInt(deal.properties.paid);
           const price_per_hour = parseToDouble(deal.properties.price_per_hour);
@@ -95,20 +103,20 @@ export class DealService {
             paid,
             price_per_hour,
             reactivation,
-            sales_cycle
+            sales_cycle,
           };
 
           const properties = DealProperties;
 
           const dealFilteredObj = Object.keys(dealObj)
-            .filter(key => properties.includes(key))
+            .filter((key) => properties.includes(key))
             .reduce((newObj, key) => {
               newObj[key] = dealObj[key];
               return newObj;
             }, {});
 
-          this.dealRepository.save(dealFilteredObj);
-        })
+          await this.dealRepository.save(dealFilteredObj);
+        }),
       );
     } catch (error) {
       console.log('Error', error);
@@ -122,9 +130,9 @@ export class DealService {
     while (allowToContinue) {
       const deals = await this.dealHubspotApiService.findAll(findParams);
 
-      (deals.paging?.next.after) ?
-        findParams.after = deals.paging.next.after :
-        allowToContinue = false;
+      deals.paging?.next.after
+        ? (findParams.after = deals.paging.next.after)
+        : (allowToContinue = false);
 
       await this.bulkCreate(deals.results);
     }
@@ -145,10 +153,14 @@ export class DealService {
       if (deal) {
         const agent_acount = parseToInt(deal.properties.agent_acount);
         const amount = parseToDouble(deal.properties.amount);
-        const amount_in_home_currency = parseToDouble(deal.properties.amount_in_home_currency);
+        const amount_in_home_currency = parseToDouble(
+          deal.properties.amount_in_home_currency,
+        );
         const contract_value = parseToDouble(deal.properties.contract_value);
-        const headcount_needed = parseToInt(deal.properties.headcount_needed);        
-        const hs_is_closed_won = boolStringToInt(deal.properties.hs_is_closed_won);
+        const headcount_needed = parseToInt(deal.properties.headcount_needed);
+        const hs_is_closed_won = boolStringToInt(
+          deal.properties.hs_is_closed_won,
+        );
         const hubspot_owner_id = parseToInt(deal.properties.hubspot_owner_id);
         const paid = boolStringToInt(deal.properties.paid);
         const price_per_hour = parseToDouble(deal.properties.price_per_hour);
@@ -168,13 +180,13 @@ export class DealService {
           paid,
           price_per_hour,
           reactivation,
-          sales_cycle
+          sales_cycle,
         };
 
         const properties = DealProperties;
 
         const dealFilteredObj = Object.keys(dealObj)
-          .filter(key => properties.includes(key))
+          .filter((key) => properties.includes(key))
           .reduce((newObj, key) => {
             newObj[key] = dealObj[key];
             return newObj;

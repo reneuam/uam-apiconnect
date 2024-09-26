@@ -1,93 +1,138 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity('tickets')
+@Entity('tickets', {
+  engine: 'MyISAM',
+})
 export class Ticket {
   @PrimaryColumn({ nullable: false })
   id: string;
-  @Column()
+
+  @Column({ nullable: true })
   amount_of_candidates: number;
-  @Column()
+
+  @Column({ nullable: true })
   closed_date: Date;
-  @Column()
+
+  @Column({ nullable: true })
   created_by: number;
-  @Column()
+
+  @Column({ nullable: true })
   createdate: Date;
-  @Column()
+
+  @Column({ nullable: true })
   deal_owner: string;
-  @Column()
+
+  @Column({ nullable: true })
   deal_type: string;
-  @Column()
+
+  @Column({ nullable: true })
   hs_all_assigned_business_unit_ids: string;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_entered_1: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_entered_15643090: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_entered_15643091: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_entered_3: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_entered_4: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_entered_66172822: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_exited_1: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_exited_15643090: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_exited_15643091: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_exited_3: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_exited_4: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_date_exited_66172822: Date;
-  @Column()
+
+  @Column({ nullable: true })
   hs_num_associated_companies: number;
-  @Column()
+
+  @Column({ nullable: true })
   hs_num_times_contacted: number;
-  @Column()
-  hs_object_id: number;
-  @Column()
+
+  @Column({ nullable: true })
+  hs_object_id: string;
+
+  @Column({ nullable: true })
   hs_pipeline: string;
-  @Column()
+
+  @Column({ nullable: true })
   hs_pipeline_stage: string;
-  @Column()
-  hs_ticket_id: number;
-  @Column()
+
+  @Column({ nullable: true, type: 'text' })
+  hs_ticket_id: string;
+
+  @Column({ nullable: true })
   hs_ticket_priority: string;
-  @Column()
+
+  @Column({ nullable: true, type: 'bigint' })
   hs_time_in_1: number;
-  @Column()
+
+  @Column({ nullable: true, type: 'bigint' })
   hs_time_in_15643090: number;
-  @Column()
+
+  @Column({ nullable: true, type: 'bigint' })
   hs_time_in_15643091: number;
-  @Column()
+
+  @Column({ nullable: true, type: 'bigint' })
   hs_time_in_3: number;
-  @Column()
+
+  @Column({ nullable: true, type: 'bigint' })
   hs_time_in_4: number;
-  @Column()
+
+  @Column({ nullable: true, type: 'bigint' })
   hs_time_in_66172822: number;
-  @Column()
+
+  @Column({ nullable: true })
   hubspot_owner_assigneddate: Date;
-  @Column()
+
+  @Column({ nullable: true })
   number_of_positions_filled: number;
-  @Column()
+
+  @Column({ nullable: true })
   number_of_positions_to_be_filled: number;
-  @Column()
+
+  @Column({ nullable: true })
   plan: string;
-  @Column()
+
+  @Column({ nullable: true })
   position_title: string;
-  @Column()
+
+  @Column({ nullable: true })
   service_type: string;
-  @Column()
+
+  @Column({ nullable: true })
   ticket_lifecycle_stage: string;
-  @Column()
+
+  @Column({ nullable: true })
   ticket_type: string;
-  @Column()
+
+  @Column({ nullable: true })
   subject: string;
-  @Column()
+
+  @Column({ nullable: true, type: 'text' })
   content: string;
-  @Column()
+
+  @Column({ nullable: true })
   source_type: string;
 }

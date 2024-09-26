@@ -11,7 +11,7 @@ export class TicketService {
   constructor(
     private readonly ticketHubspotApiService: TicketHubspotApiService,
     @InjectRepository(Ticket)
-    private readonly ticketRepository: Repository<Ticket>
+    private readonly ticketRepository: Repository<Ticket>,
   ) {}
 
   async create(id: string) {
@@ -19,20 +19,36 @@ export class TicketService {
       const ticket = await this.ticketHubspotApiService.findOne(id);
 
       if (ticket) {
-        const amount_of_candidates = parseToInt(ticket.properties.amount_of_candidates);
+        const amount_of_candidates = parseToInt(
+          ticket.properties.amount_of_candidates,
+        );
         const created_by = parseToInt(ticket.properties.created_by);
-        const hs_num_associated_companies = parseToInt(ticket.properties.hs_num_associated_companies);
-        const hs_num_times_contacted = parseToInt(ticket.properties.hs_num_times_contacted);
+        const hs_num_associated_companies = parseToInt(
+          ticket.properties.hs_num_associated_companies,
+        );
+        const hs_num_times_contacted = parseToInt(
+          ticket.properties.hs_num_times_contacted,
+        );
         const hs_object_id = parseToInt(ticket.properties.hs_object_id);
         const hs_ticket_id = parseToInt(ticket.properties.hs_ticket_id);
         const hs_time_in_1 = parseToInt(ticket.properties.hs_time_in_1);
-        const hs_time_in_15643090 = parseToInt(ticket.properties.hs_time_in_15643090);
-        const hs_time_in_15643091 = parseToInt(ticket.properties.hs_time_in_15643091);
+        const hs_time_in_15643090 = parseToInt(
+          ticket.properties.hs_time_in_15643090,
+        );
+        const hs_time_in_15643091 = parseToInt(
+          ticket.properties.hs_time_in_15643091,
+        );
         const hs_time_in_3 = parseToInt(ticket.properties.hs_time_in_3);
         const hs_time_in_4 = parseToInt(ticket.properties.hs_time_in_4);
-        const hs_time_in_66172822 = parseToInt(ticket.properties.hs_time_in_66172822);
-        const number_of_positions_filled = parseToInt(ticket.properties.number_of_positions_filled);
-        const number_of_positions_to_be_filled = parseToInt(ticket.properties.number_of_positions_to_be_filled);
+        const hs_time_in_66172822 = parseToInt(
+          ticket.properties.hs_time_in_66172822,
+        );
+        const number_of_positions_filled = parseToInt(
+          ticket.properties.number_of_positions_filled,
+        );
+        const number_of_positions_to_be_filled = parseToInt(
+          ticket.properties.number_of_positions_to_be_filled,
+        );
 
         const ticketObj = {
           id: ticket.id,
@@ -50,19 +66,19 @@ export class TicketService {
           hs_time_in_4,
           hs_time_in_66172822,
           number_of_positions_filled,
-          number_of_positions_to_be_filled
+          number_of_positions_to_be_filled,
         };
 
         const properties = TicketProperties;
 
         const ticketFilteredObj = Object.keys(ticketObj)
-          .filter(key => properties.includes(key))
+          .filter((key) => properties.includes(key))
           .reduce((newObj, key) => {
             newObj[key] = ticketObj[key];
             return newObj;
           }, {});
 
-          return await this.ticketRepository.save(ticketFilteredObj);
+        return await this.ticketRepository.save(ticketFilteredObj);
       }
 
       return null;
@@ -74,21 +90,37 @@ export class TicketService {
   async bulkCreate(tickets: any) {
     try {
       return await Promise.all(
-        tickets.map((ticket: any) => {
-          const amount_of_candidates = parseToInt(ticket.properties.amount_of_candidates);
+        tickets.map(async (ticket: any) => {
+          const amount_of_candidates = parseToInt(
+            ticket.properties.amount_of_candidates,
+          );
           const created_by = parseToInt(ticket.properties.created_by);
-          const hs_num_associated_companies = parseToInt(ticket.properties.hs_num_associated_companies);
-          const hs_num_times_contacted = parseToInt(ticket.properties.hs_num_times_contacted);
+          const hs_num_associated_companies = parseToInt(
+            ticket.properties.hs_num_associated_companies,
+          );
+          const hs_num_times_contacted = parseToInt(
+            ticket.properties.hs_num_times_contacted,
+          );
           const hs_object_id = parseToInt(ticket.properties.hs_object_id);
           const hs_ticket_id = parseToInt(ticket.properties.hs_ticket_id);
           const hs_time_in_1 = parseToInt(ticket.properties.hs_time_in_1);
-          const hs_time_in_15643090 = parseToInt(ticket.properties.hs_time_in_15643090);
-          const hs_time_in_15643091 = parseToInt(ticket.properties.hs_time_in_15643091);
+          const hs_time_in_15643090 = parseToInt(
+            ticket.properties.hs_time_in_15643090,
+          );
+          const hs_time_in_15643091 = parseToInt(
+            ticket.properties.hs_time_in_15643091,
+          );
           const hs_time_in_3 = parseToInt(ticket.properties.hs_time_in_3);
           const hs_time_in_4 = parseToInt(ticket.properties.hs_time_in_4);
-          const hs_time_in_66172822 = parseToInt(ticket.properties.hs_time_in_66172822);
-          const number_of_positions_filled = parseToInt(ticket.properties.number_of_positions_filled);
-          const number_of_positions_to_be_filled = parseToInt(ticket.properties.number_of_positions_to_be_filled);
+          const hs_time_in_66172822 = parseToInt(
+            ticket.properties.hs_time_in_66172822,
+          );
+          const number_of_positions_filled = parseToInt(
+            ticket.properties.number_of_positions_filled,
+          );
+          const number_of_positions_to_be_filled = parseToInt(
+            ticket.properties.number_of_positions_to_be_filled,
+          );
 
           const ticketObj = {
             id: ticket.id,
@@ -106,20 +138,20 @@ export class TicketService {
             hs_time_in_4,
             hs_time_in_66172822,
             number_of_positions_filled,
-            number_of_positions_to_be_filled
+            number_of_positions_to_be_filled,
           };
-  
+
           const properties = TicketProperties;
-  
+
           const ticketFilteredObj = Object.keys(ticketObj)
-            .filter(key => properties.includes(key))
+            .filter((key) => properties.includes(key))
             .reduce((newObj, key) => {
               newObj[key] = ticketObj[key];
               return newObj;
             }, {});
-          
-          this.ticketRepository.save(ticketFilteredObj);
-        })
+
+          await this.ticketRepository.save(ticketFilteredObj);
+        }),
       );
     } catch (error) {
       console.log('Error:', error);
@@ -132,10 +164,10 @@ export class TicketService {
 
     while (allowToContinue) {
       const tickets = await this.ticketHubspotApiService.findAll(findParams);
-      
-      (tickets.paging?.next.after) ?
-        findParams.after = tickets.paging.next.after :
-        allowToContinue = false;
+
+      tickets.paging?.next.after
+        ? (findParams.after = tickets.paging.next.after)
+        : (allowToContinue = false);
 
       await this.bulkCreate(tickets.results);
     }
@@ -154,20 +186,36 @@ export class TicketService {
       const ticket = await this.ticketHubspotApiService.findOne(id);
 
       if (ticket) {
-        const amount_of_candidates = parseToInt(ticket.properties.amount_of_candidates);
+        const amount_of_candidates = parseToInt(
+          ticket.properties.amount_of_candidates,
+        );
         const created_by = parseToInt(ticket.properties.created_by);
-        const hs_num_associated_companies = parseToInt(ticket.properties.hs_num_associated_companies);
-        const hs_num_times_contacted = parseToInt(ticket.properties.hs_num_times_contacted);
+        const hs_num_associated_companies = parseToInt(
+          ticket.properties.hs_num_associated_companies,
+        );
+        const hs_num_times_contacted = parseToInt(
+          ticket.properties.hs_num_times_contacted,
+        );
         const hs_object_id = parseToInt(ticket.properties.hs_object_id);
         const hs_ticket_id = parseToInt(ticket.properties.hs_ticket_id);
         const hs_time_in_1 = parseToInt(ticket.properties.hs_time_in_1);
-        const hs_time_in_15643090 = parseToInt(ticket.properties.hs_time_in_15643090);
-        const hs_time_in_15643091 = parseToInt(ticket.properties.hs_time_in_15643091);
+        const hs_time_in_15643090 = parseToInt(
+          ticket.properties.hs_time_in_15643090,
+        );
+        const hs_time_in_15643091 = parseToInt(
+          ticket.properties.hs_time_in_15643091,
+        );
         const hs_time_in_3 = parseToInt(ticket.properties.hs_time_in_3);
         const hs_time_in_4 = parseToInt(ticket.properties.hs_time_in_4);
-        const hs_time_in_66172822 = parseToInt(ticket.properties.hs_time_in_66172822);
-        const number_of_positions_filled = parseToInt(ticket.properties.number_of_positions_filled);
-        const number_of_positions_to_be_filled = parseToInt(ticket.properties.number_of_positions_to_be_filled);
+        const hs_time_in_66172822 = parseToInt(
+          ticket.properties.hs_time_in_66172822,
+        );
+        const number_of_positions_filled = parseToInt(
+          ticket.properties.number_of_positions_filled,
+        );
+        const number_of_positions_to_be_filled = parseToInt(
+          ticket.properties.number_of_positions_to_be_filled,
+        );
 
         const ticketObj = {
           id: ticket.id,
@@ -185,19 +233,19 @@ export class TicketService {
           hs_time_in_4,
           hs_time_in_66172822,
           number_of_positions_filled,
-          number_of_positions_to_be_filled
+          number_of_positions_to_be_filled,
         };
 
         const properties = TicketProperties;
 
         const ticketFilteredObj = Object.keys(ticketObj)
-          .filter(key => properties.includes(key))
+          .filter((key) => properties.includes(key))
           .reduce((newObj, key) => {
             newObj[key] = ticketObj[key];
             return newObj;
           }, {});
 
-          return await this.ticketRepository.update(id, ticketFilteredObj);
+        return await this.ticketRepository.update(id, ticketFilteredObj);
       }
 
       return null;
