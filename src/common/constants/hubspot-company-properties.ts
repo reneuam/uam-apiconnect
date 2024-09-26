@@ -22,7 +22,6 @@ export const CompanyProperties = [
   'is_public',
   'lead_potencial',
   'lifecyclestage',
-  'mkt_lead_source',
   'name',
   'num_associated_contacts',
   'num_associated_deals',

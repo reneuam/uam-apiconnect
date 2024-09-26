@@ -119,6 +119,7 @@ export const ContactProperties = [
   'lifecyclestage',
   'linkedinbio',
   'looking_for_team_support',
+  'mkt_lead_source',
   'negative_feedback',
   'numemployees',
   'pagename',
@@ -126,10 +127,10 @@ export const ContactProperties = [
   'past_client',
   'plan',
   'recent_deal_amount',
-  'recent_deal_close_date',	
+  'recent_deal_close_date',
   'referral_name',
-  'referred_by__email_',	
-  'referred_by__full_name_',	
+  'referred_by__email_',
+  'referred_by__full_name_',
   'secondary_phone',
   'state',
   'time_zone',
@@ -151,5 +152,5 @@ export const ContactProperties = [
   'what_do_you_need_assistance_with_',
   'what_outsourcing_objective_are_you_trying_to_accomplish_',
   'what_workflow_are_you_looking_to_outsource_',
-  'what_workflow_can_we_help_you_with_'
+  'what_workflow_can_we_help_you_with_',
 ];
